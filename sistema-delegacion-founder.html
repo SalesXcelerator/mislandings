@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Delegación del Founder | De Ejecutor a Líder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a12;
+      --bg-section: #0f0f1a;
+      --bg-card: #16162a;
+      --bg-dark-purple: #1a0d35;
+      --bg-purple: #2d1060;
+      --accent-gold: #F5C518;
+      --accent-gold-dim: #c9a014;
+      --accent-purple: #7c3aed;
+      --accent-purple-light: #a855f7;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0c8;
+      --text-muted: #6b6b8a;
+      --border-subtle: rgba(245, 197, 24, 0.15);
+      --border-purple: rgba(124, 58, 237, 0.25);
+      --gradient-hero: linear-gradient(135deg, #0a0a12 0%, #1a0d35 50%, #0a0a12 100%);
+      --gradient-purple: linear-gradient(135deg, #1a0d35 0%, #2d1060 100%);
+      --text-hero: clamp(2.5rem, 6vw, 5rem);
+      --text-h1: clamp(2rem, 4vw, 3.5rem);
+      --text-h2: clamp(1.5rem, 3vw, 2.25rem);
+      --text-h3: clamp(1.1rem, 2vw, 1.4rem);
+      --text-body: clamp(1rem, 1.5vw, 1.125rem);
+      --text-small: 0.875rem;
+      --text-label: 0.75rem;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    section {
+      padding: 100px 5%;
+      position: relative;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    p {
+      color: var(--text-secondary);
+      font-size: var(--text-body);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(10, 10, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .logo span {
+      color: var(--accent-gold);
+    }
+
+    .section-label {
+      font-size: var(--text-label);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .card:hover {
+      border-color: rgba(245, 197, 24, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .step-number {
+      font-size: 3rem;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(245, 197, 24, 0.3);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      opacity: 0.4;
+      margin: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .highlight {
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      transform: translateX(-40px);
+    }
+
+    .reveal-right {
+      transform: translateX(40px);
+    }
+
+    .reveal-scale {
+      transform: scale(0.92);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--gradient-hero);
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: var(--text-hero);
+      font-weight: 900;
+      margin-bottom: 24px;
+      max-width: 1000px;
+    }
+
+    .hero p {
+      font-size: var(--text-h3);
+      max-width: 700px;
+      margin-bottom: 40px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 60px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: var(--text-h1);
+      font-weight: 900;
+      color: var(--accent-gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: var(--text-small);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+    }
+
+    .bg-section {
+      background: var(--bg-section);
+    }
+
+    .bg-purple {
+      background: var(--gradient-purple);
+    }
+
+    .bg-dark {
+      background: var(--bg-dark-purple);
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .pillar-card h3 {
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+      font-size: var(--text-h3);
+    }
+
+    .indicator-box {
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .indicator-box h4 {
+      color: var(--accent-purple-light);
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+    }
+
+    .indicator-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .indicator-list li {
+      padding: 10px 0;
+      padding-left: 32px;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: var(--text-body);
+    }
+
+    .indicator-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-purple-light);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .transition-model {
+      background: var(--bg-card);
+      border: 2px solid var(--accent-gold);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    .model-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .model-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: var(--accent-gold);
+      color: #0a0a12;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 1.8rem;
+    }
+
+    .model-title {
+      font-size: var(--text-h2);
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .model-subtitle {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .model-section {
+      margin: 24px 0;
+    }
+
+    .model-section h4 {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .pros-cons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .pros-box {
+      background: rgba(124, 237, 86, 0.1);
+      border: 1px solid rgba(124, 237, 86, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .pros-box h5 {
+      color: #7ced56;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .cons-box {
+      background: rgba(237, 86, 86, 0.1);
+      border: 1px solid rgba(237, 86, 86, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .cons-box h5 {
+      color: #ed5656;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .pros-box ul,
+    .cons-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pros-box li,
+    .cons-box li {
+      padding: 6px 0;
+      padding-left: 24px;
+      position: relative;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .pros-box li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #7ced56;
+      font-weight: 700;
+    }
+
+    .cons-box li::before {
+      content: "✗";
+      position: absolute;
+      left: 0;
+      color: #ed5656;
+      font-weight: 700;
+    }
+
+    .phase-card {
+      background: var(--bg-card);
+      border: 2px solid var(--accent-purple);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .phase-badge {
+      background: var(--accent-purple);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .phase-title {
+      font-size: var(--text-h3);
+      font-weight: 800;
+      color: var(--accent-purple-light);
+    }
+
+    .phase-content {
+      margin: 20px 0;
+    }
+
+    .phase-content h4 {
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .phase-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .phase-list li {
+      padding: 10px 0;
+      padding-left: 32px;
+      position: relative;
+      color: var(--text-secondary);
+    }
+
+    .phase-list li::before {
+      content: "•";
+      position: absolute;
+      left: 10px;
+      color: var(--accent-purple-light);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .category-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 28px;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-4px);
+    }
+
+    .category-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gold);
+      color: #0a0a12;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+    }
+
+    .category-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .category-examples {
+      background: rgba(245, 197, 24, 0.05);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .category-examples h5 {
+      color: var(--accent-gold);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .category-examples ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .category-examples li {
+      padding: 4px 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    footer {
+      background: #060610;
+      padding: 40px 5%;
+      text-align: center;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    footer p {
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 60px 5%;
+      }
+
+      .stats-row {
+        gap: 32px;
+      }
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        padding: 0 3%;
+      }
+
+      .model-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .pros-cons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">Sistema de <span>Delegación</span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <span class="section-label reveal">FRAMEWORK COMPLETO</span>
+    <h1 class="reveal delay-1">Sistema de Delegación del Founder</h1>
+    <p class="reveal delay-2">
+      Elimina al dueño del negocio de la operación comercial, transfiere funciones al equipo y escala sin perder control ni calidad en los resultados
+    </p>
+    <div class="stats-row reveal delay-3">
+      <div class="stat-item">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Modelos de Transición</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Fases de Transferencia</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Pilares de Delegación</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EL PROBLEMA -->
+  <section class="bg-dark">
+    <span class="section-label reveal">EL DESAFÍO CENTRAL</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 32px;">El <span class="highlight">problema fundamental</span> del crecimiento</h2>
+    
+    <div class="reveal delay-2" style="max-width: 800px; margin: 0 auto 48px;">
+      <p style="font-size: var(--text-h3); color: var(--text-primary); margin-bottom: 24px;">
+        La mayoría de los fundadores construyen negocios que dependen completamente de ellos
+      </p>
+      <p>
+        Conocen cada cliente, toman cada decisión, resuelven cada problema. Esta dependencia crea un techo de crecimiento inevitable: <span class="highlight">el negocio no puede escalar más allá de la capacidad de una sola persona</span>.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal delay-1">
+        <h3 style="color: var(--accent-purple-light); margin-bottom: 16px;">⚠️ El Techo</h3>
+        <p>Trabajas 70+ horas/semana pero el negocio no crece. Los proyectos se detienen cuando no estás disponible.</p>
+      </div>
+      
+      <div class="card reveal delay-2">
+        <h3 style="color: var(--accent-purple-light); margin-bottom: 16px;">⚠️ La Dependencia</h3>
+        <p>El equipo espera tu aprobación para decisiones pequeñas. Sin ti, nada se mueve.</p>
+      </div>
+      
+      <div class="card reveal delay-3">
+        <h3 style="color: var(--accent-purple-light); margin-bottom: 16px;">⚠️ El Burnout</h3>
+        <p>No has tomado vacaciones en 6+ meses. Tu calendario está lleno de reuniones tácticas, no estratégicas.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LOS 3 PILARES -->
+  <section>
+    <span class="section-label reveal">LA SOLUCIÓN</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 48px;">Los <span class="highlight">3 pilares</span> de una delegación exitosa</h2>
+
+    <div class="pillar-card reveal delay-1">
+      <h3>1. Mantener Efectividad Operativa</h3>
+      <p>El negocio debe funcionar igual o mejor sin la intervención constante del fundador. No se trata de que "alguien haga algo", sino de que los resultados se mantengan o mejoren.</p>
+    </div>
+
+    <div class="pillar-card reveal delay-2">
+      <h3>2. Garantizar Consistencia</h3>
+      <p>Los procesos, la calidad y la experiencia del cliente deben ser predecibles y replicables. Los clientes no deben notar que el fundador ya no está en el día a día.</p>
+    </div>
+
+    <div class="pillar-card reveal delay-3">
+      <h3>3. Preservar Control sin Microgestionar</h3>
+      <p>El fundador mantiene visibilidad y capacidad de intervención estratégica, pero no necesita estar en cada decisión operativa. Control a través de sistemas, no de presencia.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EVOLUCIÓN DEL ROL -->
+  <section class="bg-section">
+    <span class="section-label reveal">TRANSFORMACIÓN</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 48px;">De <span class="highlight">Ejecutor</span> a <span class="highlight">Líder Estratégico</span></h2>
+
+    <div class="grid-2">
+      <div class="indicator-box reveal delay-1">
+        <h4>❌ Señales de Modo "Ejecutor"</h4>
+        <ul class="indicator-list">
+          <li>Trabajas más de 50-70 horas/semana en tareas operativas</li>
+          <li>Tu calendario está lleno de reuniones tácticas</li>
+          <li>Los proyectos se detienen cuando no estás</li>
+          <li>No has tomado vacaciones en más de 6 meses</li>
+          <li>Los empleados esperan tu aprobación para todo</li>
+          <li>Revisa y aprueba gastos menores</li>
+        </ul>
+      </div>
+
+      <div class="indicator-box reveal delay-2" style="background: rgba(124, 237, 86, 0.1); border-color: rgba(124, 237, 86, 0.3);">
+        <h4 style="color: #7ced56;">✓ Señales de Liderazgo Efectivo</h4>
+        <ul class="indicator-list">
+          <li style="color: var(--text-secondary);">Tiempo distribuido entre visión, estrategia y desarrollo de líderes</li>
+          <li style="color: var(--text-secondary);">El negocio funciona sin problemas cuando estás ausente</li>
+          <li style="color: var(--text-secondary);">Los líderes toman decisiones sin intervención constante</li>
+          <li style="color: var(--text-secondary);">Tienes tiempo para pensar estratégicamente</li>
+          <li style="color: var(--text-secondary);">Te enfocas en problemas del futuro, no del presente</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MODELOS DE TRANSICIÓN -->
+  <section class="bg-purple">
+    <span class="section-label reveal">ESTRATEGIAS</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 48px;">Los <span class="highlight">3 modelos</span> de transición de liderazgo</h2>
+
+    <!-- MODELO 1 -->
+    <div class="transition-model reveal delay-1">
+      <div class="model-header">
+        <div class="model-number">1</div>
+        <div>
+          <div class="model-title">Transición Interna</div>
+        </div>
+      </div>
+      
+      <p class="model-subtitle">Formar y desarrollar un liderazgo interno fuerte para que alguien del equipo asuma el rol de CEO.</p>
+
+      <div class="model-section">
+        <h4>📋 Cuándo Funciona:</h4>
+        <ul class="phase-list">
+          <li>Tienes un COO o ejecutivo senior excepcional</li>
+          <li>La cultura de la empresa es crítica para el éxito</li>
+          <li>El negocio requiere conocimiento profundo interno</li>
+          <li>Tienes 2-3 años para desarrollar al sucesor</li>
+        </ul>
+      </div>
+
+      <div class="model-section">
+        <h4>🎯 Proceso (18-24 meses):</h4>
+        <p style="color: var(--text-secondary); margin-bottom: 12px;"><strong>1. Identificar candidatos:</strong> Buscar capacidad de crecimiento, evaluar liderazgo estratégico, verificar que quiera el rol</p>
+        <p style="color: var(--text-secondary); margin-bottom: 12px;"><strong>2. Desarrollo progresivo:</strong> Asignar responsabilidades gradualmente, incluir en conversaciones estratégicas, proporcionar coaching</p>
+        <p style="color: var(--text-secondary);"><strong>3. Transición gradual:</strong> Anunciar con 6-12 meses de anticipación, período de transición con ambos roles activos</p>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros-box">
+          <h5>✓ Ventajas</h5>
+          <ul>
+            <li>Continuidad cultural</li>
+            <li>Conocimiento profundo del negocio</li>
+            <li>Credibilidad con el equipo</li>
+            <li>Menor riesgo de choque cultural</li>
+          </ul>
+        </div>
+        <div class="cons-box">
+          <h5>✗ Desventajas</h5>
+          <ul>
+            <li>Puede carecer de experiencia en etapa siguiente</li>
+            <li>Limitado por lo que la empresa ya conoce</li>
+            <li>Riesgo de perpetuar puntos ciegos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODELO 2 -->
+    <div class="transition-model reveal delay-2">
+      <div class="model-header">
+        <div class="model-number">2</div>
+        <div>
+          <div class="model-title">Búsqueda Externa</div>
+        </div>
+      </div>
+      
+      <p class="model-subtitle">Contratar un CEO profesional con experiencia en gestión de empresas en la etapa objetivo.</p>
+
+      <div class="model-section">
+        <h4>📋 Cuándo Funciona:</h4>
+        <ul class="phase-list">
+          <li>La empresa necesita experiencia específica (internacional, M&A)</li>
+          <li>No hay sucesor interno evidente</li>
+          <li>Se necesita cambio cultural significativo</li>
+          <li>El fundador quiere salida más rápida</li>
+        </ul>
+      </div>
+
+      <div class="model-section">
+        <h4>🎯 Proceso (6-12 meses):</h4>
+        <p style="color: var(--text-secondary); margin-bottom: 12px;"><strong>1. Definir perfil:</strong> Experiencia específica necesaria, tipo de líder que complementa al fundador, fit cultural</p>
+        <p style="color: var(--text-secondary); margin-bottom: 12px;"><strong>2. Búsqueda exhaustiva:</strong> Usar ejecutivos especializados, verificar referencias profundamente, evaluar casos reales</p>
+        <p style="color: var(--text-secondary);"><strong>3. Integración cuidadosa:</strong> Período de 90 días de aprendizaje, fundador como mentor 6-12 meses, quick wins tempranos</p>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros-box">
+          <h5>✓ Ventajas</h5>
+          <ul>
+            <li>Trae experiencia fresca y red externa</li>
+            <li>Perspectiva de industria más amplia</li>
+            <li>Habilidades específicas para siguiente etapa</li>
+            <li>Permite al fundador salir más rápido</li>
+          </ul>
+        </div>
+        <div class="cons-box">
+          <h5>✗ Desventajas</h5>
+          <ul>
+            <li>Riesgo de choque cultural</li>
+            <li>Curva de aprendizaje del negocio</li>
+            <li>Puede ser rechazado por el equipo</li>
+            <li>Costo significativo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODELO 3 -->
+    <div class="transition-model reveal delay-3">
+      <div class="model-header">
+        <div class="model-number">3</div>
+        <div>
+          <div class="model-title">Cambio de Rol del Fundador</div>
+        </div>
+      </div>
+      
+      <p class="model-subtitle">El fundador no sale de la empresa, sino que asume un rol diferente más alineado con sus fortalezas.</p>
+
+      <div class="model-section">
+        <h4>🎭 Roles Comunes:</h4>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div style="background: rgba(245, 197, 24, 0.05); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-gold);">
+            <strong style="color: var(--accent-gold);">Chairman / Presidente:</strong>
+            <p style="font-size: 0.9rem; margin-top: 8px;">Visión de largo plazo, representación externa, mentoría al CEO</p>
+          </div>
+          <div style="background: rgba(245, 197, 24, 0.05); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-gold);">
+            <strong style="color: var(--accent-gold);">Chief Product Officer:</strong>
+            <p style="font-size: 0.9rem; margin-top: 8px;">Lidera innovación de producto, se mantiene cerca de clientes</p>
+          </div>
+          <div style="background: rgba(245, 197, 24, 0.05); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-gold);">
+            <strong style="color: var(--accent-gold);">Chief Innovation Officer:</strong>
+            <p style="font-size: 0.9rem; margin-top: 8px;">Explora nuevas líneas de negocio, investiga tecnologías emergentes</p>
+          </div>
+          <div style="background: rgba(245, 197, 24, 0.05); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-gold);">
+            <strong style="color: var(--accent-gold);">Founder Emeritus:</strong>
+            <p style="font-size: 0.9rem; margin-top: 8px;">Consulta estratégica, embajador externo, mentor para el equipo</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pros-cons" style="margin-top: 24px;">
+        <div class="pros-box">
+          <h5>✓ Ventajas</h5>
+          <ul>
+            <li>Mantiene beneficio de experiencia del fundador</li>
+            <li>Permite que fundador haga lo que ama</li>
+            <li>Continuidad para stakeholders</li>
+            <li>Flexibilidad en diseño del rol</li>
+          </ul>
+        </div>
+        <div class="cons-box">
+          <h5>✗ Desventajas</h5>
+          <ul>
+            <li>Riesgo de confusión de autoridad</li>
+            <li>Difícil para fundador no intervenir</li>
+            <li>Potencial tensión con nuevo CEO</li>
+            <li>Puede retrasar independencia del líder</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CATEGORIZACIÓN DE TAREAS -->
+  <section>
+    <span class="section-label reveal">IDENTIFICACIÓN</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 48px;">Categorización de <span class="highlight">tareas críticas</span></h2>
+
+    <div class="category-grid">
+      <div class="category-card reveal delay-1">
+        <div class="category-letter">A</div>
+        <div class="category-title">Solo el Fundador</div>
+        <p class="category-subtitle">Tareas que requieren tu experiencia, relaciones o autoridad única (ahora)</p>
+        
+        <div class="category-examples">
+          <h5>Ejemplos:</h5>
+          <ul>
+            <li>Cerrar cuentas enterprise +$100k</li>
+            <li>Negociar con compradores C-level</li>
+            <li>Definir estrategia de pricing</li>
+            <li>Ajustar la oferta principal</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="category-card reveal delay-2">
+        <div class="category-letter">B</div>
+        <div class="category-title">Puede Enseñarse</div>
+        <p class="category-subtitle">Tareas que puedes documentar y transferir con entrenamiento adecuado</p>
+        
+        <div class="category-examples">
+          <h5>Ejemplos:</h5>
+          <ul>
+            <li>Proceso de discovery</li>
+            <li>Manejo de objeciones comunes</li>
+            <li>Presentación de la oferta</li>
+            <li>Seguimiento estructurado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="category-card reveal delay-3">
+        <div class="category-letter">C</div>
+        <div class="category-title">Ya Debería Estar Delegado</div>
+        <p class="category-subtitle">Tareas operativas que no requieren tu nivel de experiencia</p>
+        
+        <div class="category-examples">
+          <h5>Ejemplos:</h5>
+          <ul>
+            <li>Agendamiento de llamadas</li>
+            <li>Seguimiento administrativo</li>
+            <li>Actualización de CRM</li>
+            <li>Envío de propuestas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LAS 3 FASES DE TRANSFERENCIA -->
+  <section class="bg-section">
+    <span class="section-label reveal">IMPLEMENTACIÓN</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 48px;">Las <span class="highlight">3 fases</span> de transferencia estructurada</h2>
+
+    <div class="phase-card reveal delay-1">
+      <div class="phase-header">
+        <div class="phase-badge">Fase 1</div>
+        <div class="phase-title">Shadowing (Semanas 1-2)</div>
+      </div>
+
+      <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 20px;">
+        <strong style="color: var(--accent-purple-light);">Objetivo:</strong> El nuevo miembro observa al fundador ejecutar el proceso completo
+      </p>
+
+      <div class="phase-content">
+        <h4>👨‍💼 Qué hace el fundador:</h4>
+        <ul class="phase-list">
+          <li>Ejecuta el proceso normalmente</li>
+          <li>Explica en voz alta su razonamiento</li>
+          <li>Comparte por qué toma cada decisión</li>
+          <li>Responde preguntas después de cada interacción</li>
+        </ul>
+      </div>
+
+      <div class="phase-content">
+        <h4>👨‍🎓 Qué hace el nuevo miembro:</h4>
+        <ul class="phase-list">
+          <li>Observa en silencio (no interrumpe)</li>
+          <li>Toma notas extensivas</li>
+          <li>Hace preguntas después de cada call</li>
+          <li>Estudia los SOPs en paralelo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-card reveal delay-2">
+      <div class="phase-header">
+        <div class="phase-badge">Fase 2</div>
+        <div class="phase-title">Reverse Shadowing (Semanas 3-4)</div>
+      </div>
+
+      <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 20px;">
+        <strong style="color: var(--accent-purple-light);">Objetivo:</strong> El nuevo miembro ejecuta, el fundador observa y da feedback inmediato
+      </p>
+
+      <div class="phase-content">
+        <h4>👨‍🎓 Qué hace el nuevo miembro:</h4>
+        <ul class="phase-list">
+          <li>Ejecuta el proceso completo</li>
+          <li>El fundador está presente (llamada o en persona)</li>
+          <li>Intenta replicar lo que vio en Fase 1</li>
+        </ul>
+      </div>
+
+      <div class="phase-content">
+        <h4>👨‍💼 Qué hace el fundador:</h4>
+        <ul class="phase-list">
+          <li>Observa en silencio durante la interacción</li>
+          <li>Toma notas de errores y aciertos</li>
+          <li>Da feedback inmediato después (no durante)</li>
+          <li>Identifica gaps en entrenamiento</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-card reveal delay-3">
+      <div class="phase-header">
+        <div class="phase-badge">Fase 3</div>
+        <div class="phase-title">Autonomía Controlada (Semanas 5-8+)</div>
+      </div>
+
+      <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 20px;">
+        <strong style="color: var(--accent-purple-light);">Objetivo:</strong> El miembro ejecuta completamente solo, el fundador solo revisa métricas y llamadas grabadas
+      </p>
+
+      <div class="phase-content">
+        <h4>👨‍🎓 Qué hace el nuevo miembro:</h4>
+        <ul class="phase-list">
+          <li>Ejecuta el proceso independientemente</li>
+          <li>Reporta números semanalmente</li>
+          <li>Pide ayuda cuando está atascado</li>
+          <li>Graba llamadas para revisión</li>
+        </ul>
+      </div>
+
+      <div class="phase-content">
+        <h4>👨‍💼 Qué hace el fundador:</h4>
+        <ul class="phase-list">
+          <li>Revisa dashboard de métricas (diario/semanal)</li>
+          <li>Escucha 2-3 llamadas grabadas por semana</li>
+          <li>Da feedback en reunión semanal 1:1</li>
+          <li>Solo interviene si ve deterioro significativo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE DE PREPARACIÓN -->
+  <section class="bg-dark">
+    <span class="section-label reveal">PREPARACIÓN</span>
+    <h2 class="reveal delay-1" style="margin-bottom: 48px;">Timeline de <span class="highlight">preparación</span> para la transición</h2>
+
+    <div class="grid-2">
+      <div class="card reveal delay-1" style="border-color: var(--accent-gold);">
+        <h3 style="color: var(--accent-gold); margin-bottom: 20px;">12-18 Meses Antes</h3>
+        <ul class="phase-list">
+          <li>Documenta tu conocimiento tácito</li>
+          <li>Desarrolla al equipo de liderazgo</li>
+          <li>Reduce dependencia en ti para decisiones</li>
+          <li>Comunica visión y estrategia por escrito</li>
+        </ul>
+      </div>
+
+      <div class="card reveal delay-2" style="border-color: var(--accent-gold);">
+        <h3 style="color: var(--accent-gold); margin-bottom: 20px;">6-12 Meses Antes</h3>
+        <ul class="phase-list">
+          <li>Anuncia planes (al menos internamente)</li>
+          <li>Comienza proceso de búsqueda o desarrollo</li>
+          <li>Transfiere relaciones clave gradualmente</li>
+          <li>Prepara al consejo y stakeholders</li>
+        </ul>
+      </div>
+
+      <div class="card reveal delay-3" style="border-color: var(--accent-purple);">
+        <h3 style="color: var(--accent-purple-light); margin-bottom: 20px;">Durante Transición</h3>
+        <ul class="phase-list">
+          <li>Está disponible pero no interfiere</li>
+          <li>Apoya públicamente al nuevo líder</li>
+          <li>Permite que cometan errores no fatales</li>
+          <li>Celebra sus éxitos</li>
+        </ul>
+      </div>
+
+      <div class="card reveal delay-4" style="border-color: var(--accent-purple);">
+        <h3 style="color: var(--accent-purple-light); margin-bottom: 20px;">Post-Transición</h3>
+        <ul class="phase-list">
+          <li>Acepta que la empresa cambiará</li>
+          <li>Mantén límites claros</li>
+          <li>Encuentra tu próxima pasión</li>
+          <li>Está orgulloso de lo que construiste</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Sistema de Delegación del Founder © 2025</p>
+    <p style="margin-top: 8px;">Framework para eliminar al dueño del negocio de la operación sin perder control ni calidad</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Scroll reveal observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
