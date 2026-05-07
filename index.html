@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Landings - SalesXcelerator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a12;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: #F5C518;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .header p {
+      font-size: 1.125rem;
+      color: #b0b0c8;
+    }
+
+    .landing-card {
+      background: #16162a;
+      border: 1px solid rgba(245, 197, 24, 0.15);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .landing-card:hover {
+      border-color: rgba(245, 197, 24, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .landing-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #F5C518;
+      margin-bottom: 16px;
+    }
+
+    .landing-url {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(245, 197, 24, 0.15);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #b0b0c8;
+      margin-bottom: 16px;
+      word-break: break-all;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #F5C518;
+      color: #0a0a12;
+    }
+
+    .btn-primary:hover {
+      background: #ffd700;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(245, 197, 24, 0.35);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #F5C518;
+      border: 1.5px solid #F5C518;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(245, 197, 24, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .copied-msg {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #F5C518;
+      color: #0a0a12;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      box-shadow: 0 8px 25px rgba(245, 197, 24, 0.35);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .copied-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(245, 197, 24, 0.15);
+      color: #6b6b8a;
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 640px) {
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Mis Landings</h1>
+      <p>Directorio de landing pages publicadas</p>
+    </div>
+
+    <!-- LANDING 1 -->
+    <div class="landing-card">
+      <h2 class="landing-title">📋 Plantilla Auditoría Mensual</h2>
+      <div class="landing-url" id="url-1">
+        https://salesxcelerator.github.io/mislandings/plantilla-auditoria-mensual.html
+      </div>
+      <div class="button-group">
+        <a href="plantilla-auditoria-mensual.html" class="btn btn-primary" target="_blank">
+          🚀 Abrir Landing
+        </a>
+        <button class="btn btn-secondary" onclick="copyToClipboard('url-1')">
+          📋 Copiar Link
+        </button>
+      </div>
+    </div>
+
+    <!-- LANDING 2 -->
+    <div class="landing-card">
+      <h2 class="landing-title">📊 Plantilla Auditoría Mensual (Index)</h2>
+      <div class="landing-url" id="url-2">
+        https://salesxcelerator.github.io/mislandings/plantilla-auditoria-mensualindex.html.html
+      </div>
+      <div class="button-group">
+        <a href="plantilla-auditoria-mensualindex.html.html" class="btn btn-primary" target="_blank">
+          🚀 Abrir Landing
+        </a>
+        <button class="btn btn-secondary" onclick="copyToClipboard('url-2')">
+          📋 Copiar Link
+        </button>
+      </div>
+    </div>
+
+    <!-- LANDING 3 - Planeación Trimestral -->
+    <div class="landing-card">
+      <h2 class="landing-title">📈 Planeación Trimestral de Crecimiento</h2>
+      <div class="landing-url" id="url-3">
+        https://salesxcelerator.github.io/mislandings/planeacion-trimestral-proceso.html
+      </div>
+      <div class="button-group">
+        <a href="planeacion-trimestral-proceso.html" class="btn btn-primary" target="_blank">
+          🚀 Abrir Landing
+        </a>
+        <button class="btn btn-secondary" onclick="copyToClipboard('url-3')">
+          📋 Copiar Link
+        </button>
+      </div>
+    </div>
+
+    <!-- LANDING 4 - Plantilla Reunión Trimestral -->
+    <div class="landing-card">
+      <h2 class="landing-title">📝 Plantilla Reunión Trimestral</h2>
+      <div class="landing-url" id="url-4">
+        https://salesxcelerator.github.io/mislandings/plantilla-reunion-trimestral.html
+      </div>
+      <div class="button-group">
+        <a href="plantilla-reunion-trimestral.html" class="btn btn-primary" target="_blank">
+          🚀 Abrir Landing
+        </a>
+        <button class="btn btn-secondary" onclick="copyToClipboard('url-4')">
+          📋 Copiar Link
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      SalesXcelerator • Landings publicadas con GitHub Pages
+    </div>
+  </div>
+
+  <!-- Mensaje de copiado -->
+  <div class="copied-msg" id="copiedMsg">✅ Link copiado al portapapeles!</div>
+
+  <script>
+    function copyToClipboard(elementId) {
+      const urlElement = document.getElementById(elementId);
+      const url = urlElement.textContent.trim();
+      
+      // Crear elemento temporal para copiar
+      const tempInput = document.createElement('input');
+      tempInput.value = url;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      
+      // Mostrar mensaje
+      const msg = document.getElementById('copiedMsg');
+      msg.classList.add('show');
+      
+      setTimeout(() => {
+        msg.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
