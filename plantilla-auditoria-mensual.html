@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plantilla: Auditoría Mensual de Sales Ops</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a12;
+      --bg-section: #0f0f1a;
+      --bg-card: #16162a;
+      --accent-gold: #F5C518;
+      --accent-gold-dim: #c9a014;
+      --accent-purple: #7c3aed;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0c8;
+      --text-muted: #6b6b8a;
+      --border-subtle: rgba(245, 197, 24, 0.15);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--accent-gold);
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .header .subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .info-box {
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+
+    .info-box strong {
+      color: #a855f7;
+      font-size: 1.1rem;
+    }
+
+    .info-box ul {
+      margin-top: 12px;
+      margin-left: 20px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    thead {
+      background: var(--accent-gold);
+    }
+
+    thead th {
+      padding: 14px 12px;
+      color: #0a0a12;
+      font-weight: 700;
+      text-align: left;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    tbody td {
+      padding: 14px 12px;
+      color: var(--text-secondary);
+    }
+
+    tbody td:first-child {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    tbody tr:hover {
+      background: rgba(245, 197, 24, 0.05);
+    }
+
+    .input-cell {
+      background: var(--bg-primary);
+      border: 2px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      width: 100%;
+      min-width: 80px;
+      transition: border-color 0.2s;
+    }
+
+    .input-cell:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+    }
+
+    .analysis-section {
+      background: var(--bg-card);
+      border: 2px solid var(--accent-gold);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .analysis-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .question-box {
+      background: rgba(245, 197, 24, 0.05);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .question-number {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .answer-area {
+      background: var(--bg-primary);
+      border: 2px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .answer-area:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+    }
+
+    .solutions-section {
+      background: linear-gradient(135deg, #1a0d35 0%, #2d1060 100%);
+      border: 2px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .solution-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .solution-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .solution-header {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+    }
+
+    .solution-field {
+      margin-bottom: 16px;
+    }
+
+    .solution-field label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .category-header {
+      background: rgba(245, 197, 24, 0.1);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .category-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    /* Estilos de impresión */
+    @media print {
+      body {
+        background: white;
+        color: #000;
+      }
+
+      .container {
+        max-width: 100%;
+        padding: 20px;
+      }
+
+      .header {
+        border-bottom: 3px solid #F5C518;
+      }
+
+      .header h1 {
+        color: #F5C518;
+      }
+
+      .info-box {
+        background: #f0e6ff;
+        border: 2px solid #7c3aed;
+      }
+
+      .info-box strong {
+        color: #7c3aed;
+      }
+
+      .section {
+        background: white;
+        border: 2px solid #F5C518;
+        page-break-inside: avoid;
+      }
+
+      .section-title {
+        color: #F5C518;
+      }
+
+      thead {
+        background: #F5C518;
+      }
+
+      thead th {
+        color: #000;
+      }
+
+      tbody td {
+        color: #333;
+      }
+
+      tbody td:first-child {
+        color: #000;
+      }
+
+      .input-cell {
+        background: white;
+        border: 2px solid #ddd;
+        color: #000;
+      }
+
+      .analysis-section {
+        background: white;
+        border: 3px solid #F5C518;
+        page-break-inside: avoid;
+      }
+
+      .analysis-title {
+        color: #F5C518;
+      }
+
+      .question-box {
+        background: #fff9e6;
+        border-left: 4px solid #F5C518;
+      }
+
+      .question-number {
+        color: #c9a014;
+      }
+
+      .question-text {
+        color: #000;
+      }
+
+      .answer-area {
+        background: white;
+        border: 2px solid #ddd;
+        color: #000;
+      }
+
+      .solutions-section {
+        background: #f0e6ff;
+        border: 3px solid #7c3aed;
+        page-break-inside: avoid;
+      }
+
+      .solution-card {
+        background: white;
+        border: 2px solid #ddd;
+      }
+
+      .solution-header {
+        color: #c9a014;
+      }
+
+      .solution-field label {
+        color: #666;
+      }
+
+      .category-header {
+        background: #fff9e6;
+      }
+
+      .category-header h3 {
+        color: #c9a014;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- HEADER -->
+    <div class="header">
+      <h1>AUDITORÍA MENSUAL DE SALES OPS</h1>
+      <div class="subtitle">Mes: <input type="text" class="input-cell" placeholder="Ej: Enero 2025" style="display: inline-block; min-width: 200px; margin-left: 12px; padding: 8px 16px;"></div>
+    </div>
+
+    <!-- INFO BOX -->
+    <div class="info-box">
+      <strong>📋 DATOS A COMPARAR:</strong>
+      <ul>
+        <li>Mes actual completo</li>
+        <li>Mejor mes de los últimos 12 meses</li>
+      </ul>
+    </div>
+
+    <!-- TABLA: VOLUMEN -->
+    <div class="section">
+      <div class="category-header">
+        <h3>📊 VOLUMEN</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>MÉTRICA</th>
+            <th style="text-align: center;">MEJOR MES YTD</th>
+            <th style="text-align: center;">MES ACTUAL</th>
+            <th style="text-align: center;">DIFERENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sets</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- %"></td>
+          </tr>
+          <tr>
+            <td>Bookings inbound</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- %"></td>
+          </tr>
+          <tr>
+            <td>Bookings totales</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- %"></td>
+          </tr>
+          <tr>
+            <td>% Sets del total</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLA: SHOW RATES -->
+    <div class="section">
+      <div class="category-header">
+        <h3>👁️ SHOW RATES</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>MÉTRICA</th>
+            <th style="text-align: center;">MEJOR MES YTD</th>
+            <th style="text-align: center;">MES ACTUAL</th>
+            <th style="text-align: center;">DIFERENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Show rate Sets</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+          <tr>
+            <td>Show rate Inbound</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+          <tr>
+            <td>Show rate General</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLA: CANCELACIONES -->
+    <div class="section">
+      <div class="category-header">
+        <h3>❌ CANCELACIONES</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>MÉTRICA</th>
+            <th style="text-align: center;">MEJOR MES YTD</th>
+            <th style="text-align: center;">MES ACTUAL</th>
+            <th style="text-align: center;">DIFERENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cancelaciones por empresa</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+          <tr>
+            <td>Cancelaciones por prospecto</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+          <tr>
+            <td>Tasa de cancelación (%)</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLA: REAGENDAMIENTOS -->
+    <div class="section">
+      <div class="category-header">
+        <h3>🔄 REAGENDAMIENTOS</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>MÉTRICA</th>
+            <th style="text-align: center;">MEJOR MES YTD</th>
+            <th style="text-align: center;">MES ACTUAL</th>
+            <th style="text-align: center;">DIFERENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Reagend. por empresa</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+          <tr>
+            <td>Reagend. por prospecto</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+          <tr>
+            <td>Tasa de reagendamiento (%)</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLA: CONFIRMACIONES -->
+    <div class="section">
+      <div class="category-header">
+        <h3>✅ CONFIRMACIONES (si aplica)</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>MÉTRICA</th>
+            <th style="text-align: center;">MEJOR MES YTD</th>
+            <th style="text-align: center;">MES ACTUAL</th>
+            <th style="text-align: center;">DIFERENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mensajes enviados</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+          <tr>
+            <td>Confirmaciones recibidas</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+          <tr>
+            <td>Tasa de confirmación (%)</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+          <tr>
+            <td>Show rate de confirmados</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+          <tr>
+            <td>Show rate de no confirmados</td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="number" class="input-cell" placeholder="0" step="0.1"></td>
+            <td><input type="text" class="input-cell" placeholder="+/- pp"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLA: TRANSFERENCIAS -->
+    <div class="section">
+      <div class="category-header">
+        <h3>↔️ TRANSFERENCIAS</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>MÉTRICA</th>
+            <th style="text-align: center;">MEJOR MES YTD</th>
+            <th style="text-align: center;">MES ACTUAL</th>
+            <th style="text-align: center;">DIFERENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Transferencias en vivo</td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="number" class="input-cell" placeholder="0"></td>
+            <td><input type="text" class="input-cell" placeholder="+/-"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ANÁLISIS DE CAUSAS RAÍZ -->
+    <div class="analysis-section">
+      <div class="analysis-title">
+        🔍 ANÁLISIS DE CAUSAS RAÍZ
+      </div>
+
+      <div class="question-box">
+        <div class="question-number">1.</div>
+        <div class="question-text">¿Cuál es el problema principal identificado?</div>
+        <textarea class="answer-area" placeholder="Describe el problema más significativo que identificas en los datos..."></textarea>
+      </div>
+
+      <div class="question-box">
+        <div class="question-number">2.</div>
+        <div class="question-text">¿Es realmente un problema de "show rate" o es otra cosa?</div>
+        <textarea class="answer-area" placeholder="Analiza si el show rate bajo es síntoma o causa raíz..."></textarea>
+      </div>
+
+      <div class="question-box">
+        <div class="question-number">3.</div>
+        <div class="question-text">¿Qué variable cambió más significativamente?</div>
+        <textarea class="answer-area" placeholder="Identifica la métrica con mayor variación negativa..."></textarea>
+      </div>
+
+      <div class="question-box">
+        <div class="question-number">4.</div>
+        <div class="question-text">¿Cuál es la causa raíz más probable?</div>
+        <textarea class="answer-area" placeholder="Explica la razón fundamental detrás de los cambios observados..."></textarea>
+      </div>
+    </div>
+
+    <!-- SOLUCIONES PROPUESTAS -->
+    <div class="solutions-section">
+      <div class="analysis-title" style="color: #a855f7;">
+        💡 SOLUCIONES PROPUESTAS
+      </div>
+
+      <div class="solution-card">
+        <div class="solution-header">Solución #1</div>
+        
+        <div class="solution-field">
+          <label>Descripción</label>
+          <textarea class="answer-area" placeholder="Describe detalladamente la primera solución propuesta..." style="min-height: 80px;"></textarea>
+        </div>
+
+        <div class="solution-field">
+          <label>Impacto Proyectado</label>
+          <textarea class="answer-area" placeholder="¿Qué resultados esperas de esta solución? (ej: recuperar show rate a 41%, aumentar sets a 85/mes)"></textarea>
+        </div>
+
+        <div class="solution-field">
+          <label>Timeline de Implementación</label>
+          <input type="text" class="input-cell" placeholder="Ej: 2 semanas" style="width: 100%; padding: 12px;">
+        </div>
+      </div>
+
+      <div class="solution-card">
+        <div class="solution-header">Solución #2</div>
+        
+        <div class="solution-field">
+          <label>Descripción</label>
+          <textarea class="answer-area" placeholder="Describe detalladamente la segunda solución propuesta..." style="min-height: 80px;"></textarea>
+        </div>
+
+        <div class="solution-field">
+          <label>Impacto Proyectado</label>
+          <textarea class="answer-area" placeholder="¿Qué resultados esperas de esta solución?"></textarea>
+        </div>
+
+        <div class="solution-field">
+          <label>Timeline de Implementación</label>
+          <input type="text" class="input-cell" placeholder="Ej: 1 mes" style="width: 100%; padding: 12px;">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
