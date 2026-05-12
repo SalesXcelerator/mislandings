@@ -3,272 +3,834 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Landings - SalesXcelerator</title>
+  <title>Plantilla de Preparación de Llamada | Sistema SPSP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    /* === CSS RESET === */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    /* === VARIABLES === */
+    :root {
+      /* Fondos */
+      --bg-primary: #0a0a12;
+      --bg-section: #0f0f1a;
+      --bg-card: #16162a;
+      --bg-dark-purple: #1a0d35;
+      --bg-purple: #2d1060;
+
+      /* Acentos */
+      --accent-gold: #F5C518;
+      --accent-gold-dim: #c9a014;
+      --accent-purple: #7c3aed;
+      --accent-purple-light: #a855f7;
+
+      /* Texto */
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0c8;
+      --text-muted: #6b6b8a;
+      --text-gold: #F5C518;
+
+      /* Bordes */
+      --border-subtle: rgba(245, 197, 24, 0.15);
+      --border-purple: rgba(124, 58, 237, 0.25);
+
+      /* Gradientes */
+      --gradient-hero: linear-gradient(135deg, #0a0a12 0%, #1a0d35 50%, #0a0a12 100%);
+      --gradient-purple: linear-gradient(135deg, #1a0d35 0%, #2d1060 100%);
+      --gradient-gold: linear-gradient(135deg, #F5C518 0%, #c9a014 100%);
+
+      /* Tipografía */
+      --text-hero: clamp(2.5rem, 6vw, 5rem);
+      --text-h1: clamp(2rem, 4vw, 3.5rem);
+      --text-h2: clamp(1.5rem, 3vw, 2.25rem);
+      --text-h3: clamp(1.1rem, 2vw, 1.4rem);
+      --text-body: clamp(1rem, 1.5vw, 1.125rem);
+      --text-small: 0.875rem;
+      --text-label: 0.75rem;
+    }
+
+    /* === BASE === */
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a12;
-      color: #ffffff;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* === NAVBAR === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(10, 10, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent-gold);
+    }
+
+    /* === HERO === */
+    .hero {
+      position: relative;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      background: var(--gradient-hero);
+      padding: 120px 5% 80px;
+      overflow: hidden;
     }
 
-    .container {
-      max-width: 800px;
-      width: 100%;
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
     }
 
-    .header {
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
       text-align: center;
-      margin-bottom: 60px;
     }
 
-    .header h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      color: #F5C518;
-      margin-bottom: 12px;
+    .section-label {
+      font-size: var(--text-label);
+      font-weight: 600;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
     }
 
-    .header p {
-      font-size: 1.125rem;
-      color: #b0b0c8;
+    .hero h1 {
+      font-size: var(--text-hero);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
     }
 
-    .landing-card {
-      background: #16162a;
-      border: 1px solid rgba(245, 197, 24, 0.15);
+    .hero h1 .highlight {
+      color: var(--accent-gold);
+    }
+
+    .hero p {
+      font-size: var(--text-h3);
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50px;
+      padding: 8px 20px;
+      margin-top: 32px;
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+    }
+
+    .trust-pill::before {
+      content: "✓";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--accent-gold);
+      color: #0a0a12;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    /* === SECTIONS === */
+    section {
+      padding: 100px 5%;
+      position: relative;
+    }
+
+    .section-alt {
+      background: var(--bg-section);
+    }
+
+    .section-purple {
+      background: var(--gradient-purple);
+    }
+
+    .section-header {
+      max-width: 800px;
+      margin: 0 auto 60px;
+      text-align: center;
+    }
+
+    .section-header h2 {
+      font-size: var(--text-h1);
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-header p {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* === CARDS === */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
       border-radius: 16px;
       padding: 32px;
-      margin-bottom: 24px;
       transition: all 0.3s ease;
     }
 
-    .landing-card:hover {
+    .card:hover {
       border-color: rgba(245, 197, 24, 0.4);
       transform: translateY(-4px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
-    .landing-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #F5C518;
-      margin-bottom: 16px;
-    }
-
-    .landing-url {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(245, 197, 24, 0.15);
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.875rem;
-      color: #b0b0c8;
-      margin-bottom: 16px;
-      word-break: break-all;
-    }
-
-    .button-group {
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gradient-gold);
+      border-radius: 12px;
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9375rem;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 20px;
     }
 
-    .btn-primary {
-      background: #F5C518;
-      color: #0a0a12;
-    }
-
-    .btn-primary:hover {
-      background: #ffd700;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(245, 197, 24, 0.35);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: #F5C518;
-      border: 1.5px solid #F5C518;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(245, 197, 24, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .copied-msg {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #F5C518;
-      color: #0a0a12;
-      padding: 16px 24px;
-      border-radius: 8px;
+    .card h3 {
+      font-size: var(--text-h3);
       font-weight: 700;
-      box-shadow: 0 8px 25px rgba(245, 197, 24, 0.35);
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.3s ease;
-      pointer-events: none;
-      z-index: 1000;
+      margin-bottom: 12px;
+      color: var(--text-primary);
     }
 
-    .copied-msg.show {
+    .card p {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .card ul {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .card li {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      padding-left: 28px;
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .card li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    /* === STEP NUMBERS === */
+    .step-card {
+      position: relative;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 4rem;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(245, 197, 24, 0.3);
+      line-height: 1;
+    }
+
+    /* === DIVIDER === */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      opacity: 0.4;
+      margin: 80px auto;
+      max-width: 600px;
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: #060610;
+      padding: 40px 5%;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
+
+    /* === ANIMATIONS === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .footer {
-      text-align: center;
-      margin-top: 60px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(245, 197, 24, 0.15);
-      color: #6b6b8a;
-      font-size: 0.875rem;
+    .reveal-left {
+      transform: translateX(-40px);
     }
 
-    @media (max-width: 640px) {
-      .button-group {
-        flex-direction: column;
+    .reveal-right {
+      transform: translateX(40px);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 4%;
       }
 
-      .btn {
-        width: 100%;
-        justify-content: center;
+      .hero {
+        padding: 100px 4% 60px;
       }
+
+      section {
+        padding: 60px 4%;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .step-number {
+        font-size: 3rem;
+        top: -8px;
+        right: 16px;
+      }
+    }
+
+    /* === PROBLEMA SECTION SPECIFIC === */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .problem-card {
+      background: rgba(255, 50, 50, 0.05);
+      border: 1px solid rgba(255, 100, 100, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .problem-card:hover {
+      border-color: rgba(255, 100, 100, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .problem-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .problem-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .problem-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* === METRICS === */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-number {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .metric-label {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
     }
   </style>
 </head>
 <body>
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="logo">Sistema <span>SPSP</span></a>
+  </nav>
 
-  <div class="container">
-    <div class="header">
-      <h1>Mis Landings</h1>
-      <p>Directorio de landing pages publicadas</p>
-    </div>
-
-    <!-- LANDING 1 -->
-    <div class="landing-card">
-      <h2 class="landing-title">📋 Plantilla Auditoría Mensual</h2>
-      <div class="landing-url" id="url-1">
-        https://salesxcelerator.github.io/mislandings/plantilla-auditoria-mensual.html
-      </div>
-      <div class="button-group">
-        <a href="plantilla-auditoria-mensual.html" class="btn btn-primary" target="_blank">
-          🚀 Abrir Landing
-        </a>
-        <button class="btn btn-secondary" onclick="copyToClipboard('url-1')">
-          📋 Copiar Link
-        </button>
-      </div>
-    </div>
-
-    <!-- LANDING 2 -->
-    <div class="landing-card">
-      <h2 class="landing-title">📊 Plantilla Auditoría Mensual (Index)</h2>
-      <div class="landing-url" id="url-2">
-        https://salesxcelerator.github.io/mislandings/plantilla-auditoria-mensualindex.html.html
-      </div>
-      <div class="button-group">
-        <a href="plantilla-auditoria-mensualindex.html.html" class="btn btn-primary" target="_blank">
-          🚀 Abrir Landing
-        </a>
-        <button class="btn btn-secondary" onclick="copyToClipboard('url-2')">
-          📋 Copiar Link
-        </button>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="section-label reveal">HERRAMIENTA DE PREPARACIÓN</div>
+      <h1 class="reveal delay-1">
+        Plantilla de Práctica para <span class="highlight">Llamada de Cierre</span>
+      </h1>
+      <p class="reveal delay-2">
+        La herramienta operativa que transforma la preparación de llamadas de un ejercicio mental
+        caótico en un proceso estructurado que aumenta la tasa de cierre de forma consistente.
+      </p>
+      <div class="trust-pill reveal delay-3">
+        Parte del Sistema SPSP de Cierre High Ticket
       </div>
     </div>
+  </section>
 
-    <!-- LANDING 3 - Planeación Trimestral -->
-    <div class="landing-card">
-      <h2 class="landing-title">📈 Planeación Trimestral de Crecimiento</h2>
-      <div class="landing-url" id="url-3">
-        https://salesxcelerator.github.io/mislandings/planeacion-trimestral-proceso.html
+  <!-- PROBLEMA -->
+  <section class="section-alt">
+    <div class="section-header reveal">
+      <div class="section-label">EL PROBLEMA</div>
+      <h2>Cuando entras sin <span style="color: var(--accent-gold)">preparación estructurada</span></h2>
+      <p>
+        La diferencia entre un closer amateur y uno profesional no está en el talento natural. Está
+        en la preparación sistemática antes de cada llamada.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal delay-1">
+        <div class="problem-icon">🎲</div>
+        <h4>Improvisación reactiva</h4>
+        <p>
+          Sin preparación, cada llamada es diferente. Dependes de reaccionar en el momento en lugar
+          de ejecutar un plan.
+        </p>
       </div>
-      <div class="button-group">
-        <a href="planeacion-trimestral-proceso.html" class="btn btn-primary" target="_blank">
-          🚀 Abrir Landing
-        </a>
-        <button class="btn btn-secondary" onclick="copyToClipboard('url-3')">
-          📋 Copiar Link
-        </button>
+
+      <div class="problem-card reveal delay-2">
+        <div class="problem-icon">❓</div>
+        <h4>Preguntas genéricas</h4>
+        <p>
+          Haces las mismas preguntas a todos los prospectos sin personalizar basado en su perfil o
+          situación específica.
+        </p>
+      </div>
+
+      <div class="problem-card reveal delay-3">
+        <div class="problem-icon">🔌</div>
+        <h4>Pitch desconectado</h4>
+        <p>
+          Presentas todos los componentes de la oferta sin conectarlos específicamente con los
+          problemas que el prospecto mencionó.
+        </p>
+      </div>
+
+      <div class="problem-card reveal delay-4">
+        <div class="problem-icon">😰</div>
+        <h4>Objeciones sorpresa</h4>
+        <p>
+          Las objeciones te toman por sorpresa porque no anticipaste las más probables basado en el
+          perfil del prospecto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUCIÓN -->
+  <section>
+    <div class="section-header reveal">
+      <div class="section-label">LA SOLUCIÓN</div>
+      <h2>Preparación <span style="color: var(--accent-gold)">estructurada</span> antes de cada llamada</h2>
+      <p>
+        Esta plantilla guía al closer a través de un proceso de preparación de 10-15 minutos que
+        transforma la calidad de cada llamada.
+      </p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card reveal delay-1">
+        <div class="card-icon">📊</div>
+        <h3>Información consolidada</h3>
+        <p>
+          Toda la información del viaje y los recursos previos en un solo documento. No más buscar
+          en múltiples fuentes durante la llamada.
+        </p>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="card-icon">🎯</div>
+        <h3>Preguntas personalizadas</h3>
+        <p>
+          Preparas preguntas específicas para el perfil de este prospecto en lugar de usar el
+          mismo guión genérico para todos.
+        </p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="card-icon">🔗</div>
+        <h3>Pitch conectado</h3>
+        <p>
+          Planificas qué componentes enfatizar y qué casos de éxito usar basado en la situación
+          del prospecto antes de empezar.
+        </p>
+      </div>
+
+      <div class="card reveal delay-4">
+        <div class="card-icon">🛡️</div>
+        <h3>Objeciones anticipadas</h3>
+        <p>
+          Identificas las objeciones más probables y preparas el protocolo de exploración antes de
+          que aparezcan en la llamada.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTES -->
+  <section class="section-alt">
+    <div class="section-header reveal">
+      <div class="section-label">ESTRUCTURA DE LA PLANTILLA</div>
+      <h2>Los 5 bloques de <span style="color: var(--accent-gold)">preparación</span></h2>
+      <p>
+        Cada bloque responde una pregunta estratégica que mejora tu desempeño en la llamada.
+      </p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card step-card reveal delay-1">
+        <div class="step-number">01</div>
+        <div class="card-icon">📋</div>
+        <h3>Información Pre-Llamada</h3>
+        <ul>
+          <li>Datos básicos del prospecto</li>
+          <li>Notas del viaje</li>
+          <li>Temperatura estimada</li>
+          <li>Presencia de co-decisor</li>
+        </ul>
+      </div>
+
+      <div class="card step-card reveal delay-2">
+        <div class="step-number">02</div>
+        <div class="card-icon">❓</div>
+        <h3>Preguntas Personalizadas</h3>
+        <ul>
+          <li>Preguntas de Situación específicas</li>
+          <li>Preguntas de Problema específicas</li>
+          <li>Hipótesis del gap principal</li>
+        </ul>
+      </div>
+
+      <div class="card step-card reveal delay-3">
+        <div class="step-number">03</div>
+        <div class="card-icon">🎤</div>
+        <h3>Pitch Personalizado</h3>
+        <ul>
+          <li>Componentes a enfatizar</li>
+          <li>Casos de éxito relevantes</li>
+          <li>Conexiones diagnóstico-pitch</li>
+        </ul>
+      </div>
+
+      <div class="card step-card reveal delay-4">
+        <div class="step-number">04</div>
+        <div class="card-icon">🛡️</div>
+        <h3>Objeciones Probables</h3>
+        <ul>
+          <li>Identificación de objeciones</li>
+          <li>Plan de validación</li>
+          <li>Preguntas de exploración</li>
+        </ul>
+      </div>
+
+      <div class="card step-card reveal delay-5">
+        <div class="step-number">05</div>
+        <div class="card-icon">📊</div>
+        <h3>Evaluación Post-Llamada</h3>
+        <ul>
+          <li>Temperatura final</li>
+          <li>Qué funcionó y qué mejorar</li>
+          <li>Objeciones que aparecieron</li>
+          <li>Próximos pasos documentados</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="section-purple">
+    <div class="section-header reveal">
+      <div class="section-label">IMPACTO MEDIBLE</div>
+      <h2>Qué logras cuando preparas <span style="color: var(--accent-gold)">cada llamada</span></h2>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric reveal delay-1">
+        <div class="metric-number">+23%</div>
+        <div class="metric-label">Aumento promedio en tasa de cierre</div>
+      </div>
+
+      <div class="metric reveal delay-2">
+        <div class="metric-number">-40%</div>
+        <div class="metric-label">Reducción en objeciones no resueltas</div>
+      </div>
+
+      <div class="metric reveal delay-3">
+        <div class="metric-number">15min</div>
+        <div class="metric-label">Tiempo de preparación por llamada</div>
       </div>
     </div>
 
-    <!-- LANDING 4 - Plantilla Reunión Trimestral -->
-    <div class="landing-card">
-      <h2 class="landing-title">📝 Plantilla Reunión Trimestral</h2>
-      <div class="landing-url" id="url-4">
-        https://salesxcelerator.github.io/mislandings/plantilla-reunion-trimestral.html
+    <div class="divider" style="margin-top: 60px;"></div>
+
+    <div class="card-grid" style="margin-top: 60px;">
+      <div class="card reveal delay-1">
+        <div class="card-icon">🎯</div>
+        <h3>Consistencia en el proceso</h3>
+        <p>
+          Cada llamada sigue la misma estructura de preparación. Tu desempeño deja de depender de
+          si tuviste un buen día o no.
+        </p>
       </div>
-      <div class="button-group">
-        <a href="plantilla-reunion-trimestral.html" class="btn btn-primary" target="_blank">
-          🚀 Abrir Landing
-        </a>
-        <button class="btn btn-secondary" onclick="copyToClipboard('url-4')">
-          📋 Copiar Link
-        </button>
+
+      <div class="card reveal delay-2">
+        <div class="card-icon">📈</div>
+        <h3>Mejora continua documentada</h3>
+        <p>
+          La sección post-llamada te permite identificar patrones en tus fortalezas y debilidades
+          para entrenar de forma específica.
+        </p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="card-icon">🔄</div>
+        <h3>Transferible al equipo</h3>
+        <p>
+          Cuando contratas closers nuevos, esta plantilla se convierte en su herramienta de
+          entrenamiento y evaluación.
+        </p>
       </div>
     </div>
+  </section>
 
-    <div class="footer">
-      SalesXcelerator • Landings publicadas con GitHub Pages
+  <!-- CÓMO USARLA -->
+  <section>
+    <div class="section-header reveal">
+      <div class="section-label">IMPLEMENTACIÓN</div>
+      <h2>Cómo integrar la plantilla en tu <span style="color: var(--accent-gold)">flujo diario</span></h2>
+      <p>
+        La preparación no es un ejercicio académico. Es una inversión de 15 minutos que produce
+        resultados inmediatos.
+      </p>
     </div>
-  </div>
 
-  <!-- Mensaje de copiado -->
-  <div class="copied-msg" id="copiedMsg">✅ Link copiado al portapapeles!</div>
+    <div class="card-grid">
+      <div class="card reveal delay-1">
+        <h3>Antes de cada llamada</h3>
+        <p>
+          15 minutos antes de la llamada, completa los bloques 1-4 de la plantilla. Revisa las
+          notas del viaje y prepara preguntas específicas.
+        </p>
+      </div>
 
+      <div class="card reveal delay-2">
+        <h3>Durante la llamada</h3>
+        <p>
+          Mantén la plantilla abierta frente a ti. Usa las preguntas preparadas y toma notas
+          adicionales sobre respuestas clave del prospecto.
+        </p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <h3>Inmediatamente después</h3>
+        <p>
+          Completa el bloque 5 (evaluación) mientras la llamada está fresca. Identifica qué
+          funcionó y qué mejorarías.
+        </p>
+      </div>
+
+      <div class="card reveal delay-4">
+        <h3>Revisión semanal</h3>
+        <p>
+          Revisa todas las plantillas de la semana. Identifica patrones: objeciones recurrentes,
+          preguntas que funcionan mejor, áreas de mejora.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA EL EQUIPO -->
+  <section class="section-alt">
+    <div class="section-header reveal">
+      <div class="section-label">ESCALANDO EL SISTEMA</div>
+      <h2>Cómo usar la plantilla para <span style="color: var(--accent-gold)">entrenar equipos</span></h2>
+    </div>
+
+    <div class="card-grid">
+      <div class="card reveal delay-1">
+        <div class="card-icon">📝</div>
+        <h3>Onboarding de closers</h3>
+        <p>
+          Los closers nuevos completan la plantilla para sus primeras 20 llamadas bajo supervisión.
+          El manager revisa cada plantilla y da feedback específico.
+        </p>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="card-icon">📊</div>
+        <h3>Evaluación objetiva</h3>
+        <p>
+          En lugar de evaluar "si el closer es bueno", evalúas dimensiones específicas: calidad de
+          preparación, personalización de preguntas, anticipación de objeciones.
+        </p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="card-icon">🎓</div>
+        <h3>Entrenamiento targeted</h3>
+        <p>
+          Los patrones en las plantillas revelan qué áreas específicas necesita entrenar cada
+          closer: profundidad de diagnóstico, conexión pitch-problema, manejo de objeciones.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="divider" style="margin: 0 auto 40px; opacity: 0.3;"></div>
+    <p>
+      <strong>Sistema SPSP</strong> · Situación · Problema · Solución · Pitch
+    </p>
+    <p style="margin-top: 12px; opacity: 0.6;">
+      © 2024 · Sistema de Cierre en Llamada High Ticket
+    </p>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script>
-    function copyToClipboard(elementId) {
-      const urlElement = document.getElementById(elementId);
-      const url = urlElement.textContent.trim();
-      
-      // Crear elemento temporal para copiar
-      const tempInput = document.createElement('input');
-      tempInput.value = url;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      
-      // Mostrar mensaje
-      const msg = document.getElementById('copiedMsg');
-      msg.classList.add('show');
-      
-      setTimeout(() => {
-        msg.classList.remove('show');
-      }, 2000);
-    }
-  </script>
+    // Scroll reveal observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
 
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
